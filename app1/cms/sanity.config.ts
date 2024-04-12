@@ -1,7 +1,7 @@
+import { CubeIcon } from '@sanity/icons';
+import { visionTool } from '@sanity/vision';
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
-import { CubeIcon } from '@sanity/icons'
-import {visionTool} from '@sanity/vision'
 
 import product from './product';
 
@@ -15,5 +15,4 @@ export default defineConfig({
     },
     title: 'Produktkatalog',
     icon: CubeIcon,
-    
 });

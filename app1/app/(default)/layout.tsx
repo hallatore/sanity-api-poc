@@ -1,11 +1,19 @@
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
     return (
         <>
             <head></head>
             <body>
-                <h1>hallo!</h1>
+                <h1>Produktkatalog</h1>
                 <main>
-                    <div>{children}</div>
+                    <div>Her er det ingenting å se</div>
+                    <div>
+                        Gå på <a href="/studio">studio</a> om du har tilgang.
+                        Klikk <a href="swagger">her</a> for swagger
+                    </div>
                 </main>
             </body>
         </>
