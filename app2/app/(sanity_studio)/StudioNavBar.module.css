@@ -1,5 +1,5 @@
 .navbar {
-    background: blueviolet;
+    background: green;
     color: white;
     padding: 7px 10px;
     display: flex;
@@ -20,4 +20,5 @@
 
 .link.active {
     opacity: 1;
+    text-decoration: none;
 }
