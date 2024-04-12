@@ -1,5 +1,6 @@
-import { articlePageName } from 'cms/product';
-import { sanityFetch } from 'cms/utils/sanityFetch';
+
+import { articlePageName } from '../../cms/articlePage';
+import { sanityFetch } from '../../cms/utils/sanityFetch';
 import groq from 'groq';
 import { Slug } from 'sanity';
 
