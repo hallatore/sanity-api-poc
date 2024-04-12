@@ -1,5 +1,6 @@
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
+import { BulbOutlineIcon } from '@sanity/icons'
 
 import someProduct from './someProduct';
 
@@ -11,4 +12,6 @@ export default defineConfig({
     schema: {
         types: [someProduct],
     },
+    title: 'Demo app',
+    icon: BulbOutlineIcon,
 });

@@ -1,5 +1,6 @@
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
+import { CubeIcon } from '@sanity/icons'
 
 import product from './product';
 
@@ -11,4 +12,6 @@ export default defineConfig({
     schema: {
         types: [product],
     },
+    title: 'Produktkatalog',
+    icon: CubeIcon
 });

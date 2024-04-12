@@ -1,0 +1,23 @@
+.navbar {
+    background: blueviolet;
+    color: white;
+    padding: 7px 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.link {
+    font-size: 14px;
+    font-weight: bold;
+    color: inherit;
+    font-family: sans-serif;
+    opacity: 0.7;
+}
+
+.link:hover {
+    opacity: 1;
+}
+
+.link.active {
+    opacity: 1;
+}
