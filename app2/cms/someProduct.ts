@@ -1,3 +1,4 @@
+import { StarIcon } from '@sanity/icons';
 import groq from 'groq';
 import { defineField, defineType, Reference, ValidationContext } from 'sanity';
 
@@ -7,7 +8,8 @@ import { client, sanityApiVersion } from './utils/sanityClient';
 
 export default defineType({
     name: SOME_PRODUCT,
-    title: 'Some product',
+    title: 'Enhanced product',
+    icon: StarIcon,
     type: 'document',
     fields: [
         defineField({
