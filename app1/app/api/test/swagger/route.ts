@@ -1,16 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSwaggerSpec } from 'next-swagger-doc';
  
-/**
- * @swagger
- * /api/hello:
- *   get:
- *     description: Returns the hello world hei hei hei
- *     responses:
- *       200:
- *         description: Hello World!
- */
-
 export async function GET(request: NextRequest)
 {
     const spec: Record<string, any> = createSwaggerSpec({

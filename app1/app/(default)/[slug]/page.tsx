@@ -19,7 +19,7 @@ async function Page({ params }: { params: { slug: string } }) {
 
     return (
         <div>
-            <h1>hei hei</h1>
+            <h1>hei heifsdfsdf</h1>
         </div>
     );
 }
