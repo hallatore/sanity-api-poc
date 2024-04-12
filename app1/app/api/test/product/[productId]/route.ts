@@ -14,7 +14,7 @@ const query = groq`*[_type == '${PRODUCT}' && _id == $id][0]
 
 /**
  * @swagger
- * /api/test/products/{productId}:
+ * /api/test/product/{productId}:
  *   get:
  *     summary: Gets a product by id
  *     description: Returns the products if it exists

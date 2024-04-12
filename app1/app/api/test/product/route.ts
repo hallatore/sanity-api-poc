@@ -15,7 +15,7 @@ const query = groq`*[_type == '${PRODUCT}']
 
 /**
  * @swagger
- * /api/test/products:
+ * /api/test/product:
  *   get:
  *     summary: Gets some products
  *     description: Returns some products
@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
 
 /**
  * @swagger
- * /api/test/products:
+ * /api/test/product:
  *   post:
  *     summary: does nothing
  *     description: does nothing. amazing

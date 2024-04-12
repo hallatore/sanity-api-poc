@@ -1,27 +1,34 @@
 import { Card, Select, Spinner, Text } from '@sanity/ui';
 import groq from 'groq';
 import { FormEvent, useCallback } from 'react';
-import { set, StringInputProps, unset } from 'sanity';
+import {
+    PatchEvent,
+    set,
+    StringInputProps,
+    unset,
+    useDocumentOperation,
+    useFormValue,
+} from 'sanity';
 import useSWRImmutable from 'swr';
 
-import { SOME_PRODUCT } from './someProduct';
+import { SOME_PRODUCT } from './schemaNames';
 import { client } from './utils/sanityClient';
-
-const data = [
-    { id: '1', title: 'Product 1', price: 100 },
-    { id: '2', title: 'Product 2', price: 200 },
-    { id: '3', title: 'Product 3', price: 300 },
-];
 
 type Product = {
     id: string;
     title: string;
-    body: string;
 };
 
-function ProductSelector(props: StringInputProps) {
-    const { onChange, value } = props;
-    const url = 'https://jsonplaceholder.typicode.com/posts';
+function ProductSelector(props: StringInputProps, context: any) {
+    const { onChange, value, path } = props;
+    const url = '/api/products';
+
+    const parent = useFormValue(path.slice(0, -1));
+    const { patch } = useDocumentOperation(
+        parent._id.replace('drafts.', ''),
+        parent._type
+    );
+
     const { data, isLoading, error } = useSWRImmutable(url, async () => {
         const response = await fetch(url);
         const jsonResponse = await response.json();
@@ -52,9 +59,20 @@ function ProductSelector(props: StringInputProps) {
     const handleChange = useCallback(
         (event: FormEvent<HTMLSelectElement> | undefined) => {
             const value = event?.currentTarget.value;
-            onChange(value ? set(value) : unset());
+            if (value) {
+                const product = data?.find((item) => item.id === value);
+
+                patch.execute([
+                    { set: { name: product?.title, productReference: value } },
+                ]);
+            } else {
+                patch.execute([
+                    { set: { name: undefined, productReference: undefined } },
+                ]);
+            }
+            //onChange(value ? set(value) : unset());
         },
-        [onChange]
+        [onChange, data]
     );
 
     if (error)
@@ -76,7 +94,7 @@ function ProductSelector(props: StringInputProps) {
             <option value=""></option>
             {data.map((item) => (
                 <option key={item.id} value={item.id}>
-                    {item.id} {item.title}
+                    {item.title}
                 </option>
             ))}
         </Select>

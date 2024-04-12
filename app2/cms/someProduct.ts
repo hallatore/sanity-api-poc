@@ -2,15 +2,20 @@ import groq from 'groq';
 import { defineField, defineType, Reference, ValidationContext } from 'sanity';
 
 import ProductSelector from './ProductSelector';
+import { SOME_PRODUCT } from './schemaNames';
 import { client, sanityApiVersion } from './utils/sanityClient';
-
-export const SOME_PRODUCT = 'someProduct';
 
 export default defineType({
     name: SOME_PRODUCT,
     title: 'Some product',
     type: 'document',
     fields: [
+        defineField({
+            name: 'name',
+            type: 'string',
+            readOnly: true,
+            hidden: true,
+        }),
         defineField({
             name: 'productReference',
             title: 'Produktkatalog produkt',
@@ -46,6 +51,11 @@ export default defineType({
             name: 'metadata',
             title: 'Metadata',
             type: 'string',
+        }),
+        defineField({
+            name: 'isPromoted',
+            title: 'Promoted',
+            type: 'boolean',
         }),
     ],
 });

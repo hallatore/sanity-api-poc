@@ -1,0 +1,26 @@
+.productList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.productList li {
+    border-radius: 3px;
+    background: #eee;
+    padding: 20px;
+    width: 250px;
+}
+
+.productList h2 {
+    margin: 0;
+}
+
+.productList li.promoted {
+    background: gold;
+}
+
+.metadata {
+    font-style: italic;
+}
