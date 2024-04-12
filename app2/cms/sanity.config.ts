@@ -1,7 +1,7 @@
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 
-import articlePage from './cms/articlePage';
+import someProduct from './someProduct';
 
 export default defineConfig({
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
@@ -9,6 +9,6 @@ export default defineConfig({
     basePath: '/studio',
     plugins: [structureTool()],
     schema: {
-        types: [articlePage],
+        types: [someProduct],
     },
 });

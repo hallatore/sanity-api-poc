@@ -1,5 +1,5 @@
 import { PortableText } from '@portabletext/react';
-import { articlePageName } from 'cms/articlePage';
+import { articlePageName } from 'cms/someProduct';
 import { sanityFetch } from 'cms/utils/sanityFetch';
 import groq from 'groq';
 import { Metadata } from 'next';
