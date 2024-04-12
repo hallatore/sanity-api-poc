@@ -1,3 +1,22 @@
 {
-    "git.ignoreLimitWarning": true
+    "typescript.tsdk": "./app1/node_modules/typescript/lib",
+    "typescript.implementationsCodeLens.enabled": true,
+    "typescript.referencesCodeLens.enabled": true,
+    "typescript.referencesCodeLens.showOnAllFunctions": true,
+    "editor.formatOnSave": true,
+    "[typescript][typescriptreact][javascript][json][jsonc][scss][css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "prettier.requireConfig": true,
+    "prettier.configPath": ".prettierrc.json",
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "*.tsx": "${capture}.module.css, ${capture}.module.scss, ${capture}.*.ts, ${capture}.*.tsx",
+        "*.ts": "${capture}.*.ts"
+    },
+    "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+    "eslint.workingDirectories": [
+        "./app1",
+        "./app2"
+    ]
 }
