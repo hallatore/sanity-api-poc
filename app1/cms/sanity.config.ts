@@ -13,5 +13,6 @@ export default defineConfig({
         types: [product],
     },
     title: 'Produktkatalog',
-    icon: CubeIcon
+    icon: CubeIcon,
+    
 });
