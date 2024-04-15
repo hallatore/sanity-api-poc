@@ -30,32 +30,35 @@ function ProductSelector(props: StringInputProps, context: any) {
         parent._type
     );
 
-    const { data, isLoading, error } = useSWRImmutable(url, async () => {
-        const response = await fetch(url);
-        const jsonResponse = await response.json();
-        const result = jsonResponse as Product[];
+    const { data, isLoading, error } = useSWRImmutable(
+        url + value,
+        async () => {
+            const response = await fetch(url);
+            const jsonResponse = await response.json();
+            const result = jsonResponse as Product[];
 
-        if (!result) {
-            return [];
+            if (!result) {
+                return [];
+            }
+
+            const existingProducts = await client.fetch<
+                { productReference: string }[]
+            >(
+                groq`*[_type == '${SOME_PRODUCT}']{ productReference }`,
+                {},
+                { perspective: 'raw', cache: 'no-cache' }
+            );
+            const existingProductsIds = existingProducts.map(
+                (product) => product.productReference
+            );
+
+            return result.filter(
+                (product) =>
+                    product.id.toString() === value ||
+                    !existingProductsIds.includes(product.id.toString())
+            );
         }
-
-        const existingProducts = await client.fetch<
-            { productReference: string }[]
-        >(
-            groq`*[_type == '${SOME_PRODUCT}']{ productReference }`,
-            {},
-            { perspective: 'raw' }
-        );
-        const existingProductsIds = existingProducts.map(
-            (product) => product.productReference
-        );
-
-        return result.filter(
-            (product) =>
-                product.id.toString() === value ||
-                !existingProductsIds.includes(product.id.toString())
-        );
-    });
+    );
 
     const handleChange = useCallback(
         (event: FormEvent<HTMLSelectElement> | undefined) => {
