@@ -9,7 +9,6 @@ const getClient = () => {
         projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
         dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
         apiVersion: sanityApiVersion,
-        perspective: 'published',
         token: token,
         useCdn: false,
     });

@@ -17,7 +17,10 @@ async function getProducts(): Promise<Product[]> {
     const products = await getExternalProducts();
     const productMetadata = await client.fetch<SanityProduct[]>(
         groq`*[_type == '${SOME_PRODUCT}']{ productReference, metadata, isPromoted }`,
-        {}
+        {},
+        {
+            cache: 'no-cache',
+        }
     );
 
     return products.map((product) => {

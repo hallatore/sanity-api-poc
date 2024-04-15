@@ -2,6 +2,7 @@ import { Card, Select, Spinner, Text } from '@sanity/ui';
 import groq from 'groq';
 import { FormEvent, useCallback } from 'react';
 import {
+    FormDocumentValue,
     PatchEvent,
     set,
     StringInputProps,
@@ -23,7 +24,7 @@ function ProductSelector(props: StringInputProps, context: any) {
     const { onChange, value, path } = props;
     const url = '/api/products';
 
-    const parent = useFormValue(path.slice(0, -1));
+    const parent = useFormValue(path.slice(0, -1)) as FormDocumentValue;
     const { patch } = useDocumentOperation(
         parent._id.replace('drafts.', ''),
         parent._type

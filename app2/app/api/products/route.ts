@@ -23,7 +23,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function getExternalProducts() {
-    const response = await fetch('http://localhost:3000/api/test/product');
+    const response = await fetch('http://localhost:3000/api/test/product', {
+        cache: 'no-cache',
+    });
     const productResponse = (await response.json()) as ProductResponse;
     return productResponse.products;
 }
