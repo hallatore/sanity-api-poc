@@ -1,5 +1,5 @@
 import { IceCreamIcon } from '@sanity/icons';
-import { defineType } from 'sanity';
+import { defineField, defineType } from 'sanity';
 
 export const PRODUCT = 'product';
 
@@ -9,16 +9,15 @@ export default defineType({
     type: 'document',
     icon: IceCreamIcon,
     fields: [
-        {
+        defineField({
             name: 'title',
             title: 'Title',
             type: 'string',
-        },
-        {
+        }),
+        defineField({
             name: 'content',
             title: 'Content',
             type: 'text',
-            rows: 5,
-        },
+        }),
     ],
 });
