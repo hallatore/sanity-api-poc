@@ -19,5 +19,11 @@ export default defineType({
             title: 'Content',
             type: 'text',
         }),
+        defineField({
+            name: 'image',
+            title: 'Product image',
+            type: 'image',
+            options: { hotspot: true },
+        }),
     ],
 });
