@@ -1,17 +1,13 @@
 import { PRODUCT } from 'cms/product';
 import { sanityFetch } from 'cms/utils/sanityFetch';
 import groq from 'groq';
-import { NextApiRequest } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
 
-type Product = {
-    _id: string;
-    title: string;
-    content: string;
-};
+import { getUrlForImage } from './imageUtils';
+import { ExternalProduct, Product } from './product.types';
 
 const query = groq`*[_type == '${PRODUCT}'] 
-{_id, title, content}`;
+{_id, title, content, image}`;
 
 /**
  * @swagger
@@ -38,10 +34,21 @@ export async function GET(request: NextRequest) {
     if (!products) {
         return NextResponse.error();
     }
+    console.log(products);
+
+    const externalProducts = products.map(
+        (p) =>
+            <ExternalProduct>{
+                _id: p._id,
+                title: p.title,
+                content: p.content,
+                image: p.image ? getUrlForImage(p.image) : undefined,
+            }
+    );
 
     return NextResponse.json({
         message: 'Products from dataset',
-        products,
+        products: externalProducts,
     });
 }
 

@@ -1,6 +1,7 @@
 import { Card, Select, Spinner, Text } from '@sanity/ui';
+import { ExternalProduct } from 'app/api/products/route';
 import groq from 'groq';
-import { FormEvent, useCallback } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import {
     FormDocumentValue,
     PatchEvent,
@@ -15,12 +16,10 @@ import useSWRImmutable from 'swr';
 import { SOME_PRODUCT } from './schemaNames';
 import { client } from './utils/sanityClient';
 
-type Product = {
-    id: string;
-    title: string;
-};
-
 function ProductSelector(props: StringInputProps, context: any) {
+    const [selectedProduct, setSelectedProduct] = useState<
+        ExternalProduct | undefined
+    >(undefined);
     const { onChange, value, path } = props;
     const url = '/api/products';
 
@@ -35,9 +34,9 @@ function ProductSelector(props: StringInputProps, context: any) {
         async () => {
             const response = await fetch(url);
             const jsonResponse = await response.json();
-            const result = jsonResponse as Product[];
+            const externalProducts = jsonResponse as ExternalProduct[];
 
-            if (!result) {
+            if (!externalProducts) {
                 return [];
             }
 
@@ -52,10 +51,17 @@ function ProductSelector(props: StringInputProps, context: any) {
                 (product) => product.productReference
             );
 
-            return result.filter(
+            const preSelectedProduct = externalProducts.find(
+                (p) => p._id === value
+            );
+            if (preSelectedProduct) {
+                setSelectedProduct(preSelectedProduct);
+            }
+
+            return externalProducts.filter(
                 (product) =>
-                    product.id.toString() === value ||
-                    !existingProductsIds.includes(product.id.toString())
+                    product._id.toString() === value ||
+                    !existingProductsIds.includes(product._id.toString())
             );
         }
     );
@@ -64,7 +70,8 @@ function ProductSelector(props: StringInputProps, context: any) {
         (event: FormEvent<HTMLSelectElement> | undefined) => {
             const value = event?.currentTarget.value;
             if (value) {
-                const product = data?.find((item) => item.id === value);
+                const product = data?.find((item) => item._id === value);
+                setSelectedProduct(product);
 
                 patch.execute([
                     { set: { name: product?.title, productReference: value } },
@@ -94,14 +101,25 @@ function ProductSelector(props: StringInputProps, context: any) {
         );
 
     return (
-        <Select onChange={handleChange} value={value}>
-            <option value=""></option>
-            {data.map((item) => (
-                <option key={item.id} value={item.id}>
-                    {item.title}
-                </option>
-            ))}
-        </Select>
+        <>
+            <Select onChange={handleChange} value={value}>
+                <option value=""></option>
+                {data.map((item) => (
+                    <option key={item._id} value={item._id}>
+                        {item.title}
+                    </option>
+                ))}
+            </Select>
+            {selectedProduct && (
+                <div>
+                    <h2>External product data</h2>
+                    <h3>Title: {selectedProduct.title}</h3>
+                    <p>Content: {selectedProduct.content}</p>
+                    <p>Image: </p>
+                    <img src={selectedProduct.image} />
+                </div>
+            )}
+        </>
     );
 }
 

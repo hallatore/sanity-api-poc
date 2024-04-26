@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { Image } from 'sanity';
 
 type ProductResponse = {
     message: string;
@@ -9,16 +10,22 @@ export type ExternalProduct = {
     _id: string;
     title: string;
     content: string;
+    image?: string;
 };
 
 export async function GET(request: NextRequest) {
     const products = await getExternalProducts();
 
     return Response.json(
-        products.map((product) => ({
-            id: product._id,
-            title: product.title,
-        }))
+        products.map(
+            (product) =>
+                <ExternalProduct>{
+                    _id: product._id,
+                    title: product.title,
+                    content: product.content,
+                    image: product.image,
+                }
+        )
     );
 }
 
